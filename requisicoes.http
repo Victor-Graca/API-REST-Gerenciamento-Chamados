@@ -1,0 +1,342 @@
+### Requisição 1: Listar todos os chamados
+GET http://localhost:8080/chamados
+
+# Resposta HTTP/JSON:
+
+# HTTP/1.1 200 
+# Content-Type: application/json
+# Content-Length: 1339
+# Date: Mon, 02 Nov 2026 21:27:47 GMT
+# Connection: close
+
+# [
+#   {
+#     "id": 1,
+#     "titulo": "Impressora não liga",
+#     "solicitante": "Usuario 1",
+#     "setor": "Financeiro",
+#     "prioridade": "MEDIA",
+#     "status": "ABERTO"
+#   },
+#   {
+#     "id": 2,
+#     "titulo": "Queda de internet no setor",
+#     "solicitante": "Usuario 2",
+#     "setor": "Operações",
+#     "prioridade": "ALTA",
+#     "status": "EM_ANDAMENTO"
+#   },
+#   {
+#     "id": 3,
+#     "titulo": "Sem acesso ao sistema de pagamentos",
+#     "solicitante": "Usuario 3",
+#     "setor": "Financeiro",
+#     "prioridade": "ALTA",
+#     "status": "ABERTO"
+#   },
+#   {
+#     "id": 4,
+#     "titulo": "Substituição de teclado",
+#     "solicitante": "Usuario 4",
+#     "setor": "RH",
+#     "prioridade": "BAIXA",
+#     "status": "RESOLVIDO"
+#   },
+#   {
+#     "id": 5,
+#     "titulo": "Monitor piscando",
+#     "solicitante": "Usuario 5",
+#     "setor": "Marketing",
+#     "prioridade": "MEDIA",
+#     "status": "EM_ANDAMENTO"
+#   },
+#   {
+#     "id": 6,
+#     "titulo": "Erro no servidor de arquivos",
+#     "solicitante": "Usuario 6",
+#     "setor": "TI",
+#     "prioridade": "ALTA",
+#     "status": "ABERTO"
+#   },
+#   {
+#     "id": 7,
+#     "titulo": "Configuração de e-mail corporativo",
+#     "solicitante": "Usuario 7",
+#     "setor": "Comercial",
+#     "prioridade": "BAIXA",
+#     "status": "RESOLVIDO"
+#   },
+#   {
+#     "id": 8,
+#     "titulo": "Lentidão ao abrir planilhas",
+#     "solicitante": "Usuario 8",
+#     "setor": "Financeiro",
+#     "prioridade": "BAIXA",
+#     "status": "ABERTO"
+#   },
+#   {
+#     "id": 9,
+#     "titulo": "Impressora travando papel",
+#     "solicitante": "Usuario 9",
+#     "setor": "RH",
+#     "prioridade": "MEDIA",
+#     "status": "RESOLVIDO"
+#   },
+#   {
+#     "id": 10,
+#     "titulo": "Instalação do pacote Office",
+#     "solicitante": "Usuario 10",
+#     "setor": "Comercial",
+#     "prioridade": "BAIXA",
+#     "status": "EM_ANDAMENTO"
+#   }
+# ]
+
+# Explicação do resultado:
+
+# A requisição 1 utiliza o endpoint /chamados com GET para listar todos os
+# chamados e retorna com status HTTP 200 OK, indicando que a requisição foi
+# realizada com sucesso. No JSON, todos os 10 chamados fictícios iniciais
+# são retornados.
+
+###
+
+### Requisição 2: Consultar chamado por ID existente
+GET http://localhost:8080/chamados/1
+
+# Resposta HTTP/JSON:
+
+# HTTP/1.1 200 
+# Content-Type: application/json
+# Transfer-Encoding: chunked
+# Date: Mon, 02 Nov 2026 21:34:09 GMT
+# Connection: close
+
+# {
+#   "id": 1,
+#   "titulo": "Impressora não liga",
+#   "solicitante": "Usuario 1",
+#   "setor": "Financeiro",
+#   "prioridade": "MEDIA",
+#   "status": "ABERTO"
+# }
+
+# Explicação do resultado:
+
+# A requisição 2 utiliza o endpoint /chamados/1 com o id 1 e GET, que é um chamado
+# já registrado e retorna com status HTTP 200 OK, indicando que a requisição foi 
+# realizada com sucesso. No JSON, o chamado com id 1 é retornado.
+
+###
+
+### Requisição 3: Consultar chamado por ID inexistente
+GET http://localhost:8080/chamados/200
+
+# Resposta HTTP/JSON:
+
+# HTTP/1.1 404 
+# Content-Length: 0
+# Date: Mon, 02 Nov 2026 21:36:58 GMT
+# Connection: close
+
+# Explicação do resultado:
+
+# A requisição 3 utiliza o endpoint /chamados/200 com o id 200 e GET, que não
+# existe e retorna com status HTTP 404 Not Found, indicando que o chamado com
+# id 200 não existe e por isso nada foi encontrado.
+
+###
+
+### Requisição 4: Filtrar chamado por setor
+GET http://localhost:8080/chamados/setor?nome=financeiro
+
+# Resposta HTTP/JSON:
+
+# HTTP/1.1 200 
+# Content-Type: application/json
+# Content-Length: 404
+# Date: Mon, 02 Nov 2026 21:38:14 GMT
+# Connection: close
+
+# [
+#   {
+#     "id": 1,
+#     "titulo": "Impressora não liga",
+#     "solicitante": "Usuario 1",
+#     "setor": "Financeiro",
+#     "prioridade": "MEDIA",
+#     "status": "ABERTO"
+#   },
+#   {
+#     "id": 3,
+#     "titulo": "Sem acesso ao sistema de pagamentos",
+#     "solicitante": "Usuario 3",
+#     "setor": "Financeiro",
+#     "prioridade": "ALTA",
+#     "status": "ABERTO"
+#   },
+#   {
+#     "id": 8,
+#     "titulo": "Lentidão ao abrir planilhas",
+#     "solicitante": "Usuario 8",
+#     "setor": "Financeiro",
+#     "prioridade": "BAIXA",
+#     "status": "ABERTO"
+#   }
+# ]
+
+# Explicação do resultado:
+
+# A requisição 4 utiliza o endpoint /chamados/setor com GET, passando o nome financeiro
+# com todas as letras minúsculas. Como o endpoint foi configurado corretamente para não
+# diferenciar letras maiúsculas de minúsculas, o setor Financeiro com f maiúsculo foi
+# encontrado com sucesso, com o status HTTP 200 OK. No JSON, todos os chamados com
+# o setor Financeiro foram retornados.
+
+###
+
+### Requisição 5: Listar chamados críticos
+GET http://localhost:8080/chamados/criticos
+
+# Resposta HTTP/JSON:
+
+# HTTP/1.1 200 
+# Content-Type: application/json
+# Content-Length: 407
+# Date: Mon, 02 Nov 2026 21:41:55 GMT
+# Connection: close
+
+# [
+#   {
+#     "id": 2,
+#     "titulo": "Queda de internet no setor",
+#     "solicitante": "Usuario 2",
+#     "setor": "Operações",
+#     "prioridade": "ALTA",
+#     "status": "EM_ANDAMENTO"
+#   },
+#   {
+#     "id": 3,
+#     "titulo": "Sem acesso ao sistema de pagamentos",
+#     "solicitante": "Usuario 3",
+#     "setor": "Financeiro",
+#     "prioridade": "ALTA",
+#     "status": "ABERTO"
+#   },
+#   {
+#     "id": 6,
+#     "titulo": "Erro no servidor de arquivos",
+#     "solicitante": "Usuario 6",
+#     "setor": "TI",
+#     "prioridade": "ALTA",
+#     "status": "ABERTO"
+#   }
+# ]
+
+# Explicação do resultado:
+
+# A requisição 5 utiliza o endpoint /chamados/criticos com GET, que deve retornar
+# os chamados que tem a prioridade alta e o status diferente de resolvido. O status
+# HTTP foi 200 OK, indicando que a requisição foi realizada com sucesso. No JSON,
+# todos os chamados com prioridade ALTA e status diferente de RESOLVIDO foram 
+# retornados, demonstrando que o endpoint foi configurado corretamente.
+
+###
+
+### Requisição 6: Resumo da quantidade de chamados por status
+GET http://localhost:8080/chamados/resumo
+
+# Resposta HTTP/JSON:
+
+# HTTP/1.1 200 
+# Content-Type: application/json
+# Content-Length: 55
+# Date: Mon, 02 Nov 2026 21:46:02 GMT
+# Connection: close
+
+# {
+#   "abertos": 4,
+#   "emAndamento": 3,
+#   "resolvidos": 3,
+#   "total": 10
+# }
+
+# Explicação do resultado:
+
+# A requisição 6 utiliza o endpoint /chamados/resumo com GET, que deve retornar a
+# quantidade de chamados por status, além do total de chamados registrados. O status HTTP
+# foi 200 OK, indicando que a requisição foi bem sucedida. No JSON, a quantidade de chamados
+# abertos, emAndamento e resolvidos foi retornada corretamente, além do valor 10 para o
+# total, que são todos os chamados fictícios iniciais, indicando que o endpoint foi
+# configurado corretamente.
+
+###
+
+### Requisição 7: Cadastrar novo chamado
+POST http://localhost:8080/chamados
+Content-Type: application/json
+
+{
+  "titulo": "Mouse sem fio não funciona",
+  "solicitante": "Usuario 11",
+  "setor": "Financeiro",
+  "prioridade": "MEDIA",
+  "status": "ABERTO"
+}
+
+# Resposta HTTP/JSON:
+
+# HTTP/1.1 201 
+# Content-Type: application/json
+# Content-Length: 135
+# Date: Mon, 02 Nov 2026 21:50:12 GMT
+# Connection: close
+
+# {
+#   "id": 11,
+#   "titulo": "Mouse sem fio não funciona",
+#   "solicitante": "Usuario 11",
+#   "setor": "Financeiro",
+#   "prioridade": "MEDIA",
+#   "status": "ABERTO"
+# }
+
+# Explicação do resultado:
+
+# A requisição 7 utiliza o endpoint /chamados com POST para cadastrar um novo 
+# chamado, passando um JSON para o cadastro, como foi solicitado nas instruções
+# do trabalho. O status HTTP foi 201 CREATED, indicando que o novo chamado foi
+# criado e cadastrado corretamente. No JSON, o resultado de como o chamado cadastrado
+# foi registrado é retornado, com o id que foi adicionado automaticamente pela
+# chamada do endpoint no código.
+
+###
+
+### Requisição 8: Verificar o chamado cadastrado anteriormente
+GET http://localhost:8080/chamados/11
+
+# Resposta HTTP/JSON:
+
+# HTTP/1.1 200 
+# Content-Type: application/json
+# Transfer-Encoding: chunked
+# Date: Mon, 02 Nov 2026 21:57:16 GMT
+# Connection: close
+
+# {
+#   "id": 11,
+#   "titulo": "Mouse sem fio não funciona",
+#   "solicitante": "Usuario 11",
+#   "setor": "Financeiro",
+#   "prioridade": "MEDIA",
+#   "status": "ABERTO"
+# }
+
+# Explicação do resultado:
+
+# A requisição 8 utiliza o endpoint /chamados/11 com o id 11 e GET, que é
+# o id do chamado cadastrado na requisição 7. O status HTTP foi 200 OK,
+# indicando que a requisição foi realizada com sucesso. No JSON, o chamado
+# recém cadastrado na requisição 7 é retornado, indicando que novos chamados
+# adicionados persistem em memória enquanto a aplicação está rodando. Caso 
+# a aplicação seja parada, o chamado da requisição 7 vai ser apagado.
